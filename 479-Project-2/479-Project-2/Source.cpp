@@ -21,7 +21,7 @@ int main() {
 	//
 
 }*/
-
+//Test comment fo git
 // I was thinking of how to make this dynamic.
 // The menu will be the same thing each time, just the specific integer we care about changes 
 // First menu is initLocProb, second is Filtering after Evidence, etc. 
