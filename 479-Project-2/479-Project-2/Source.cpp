@@ -96,7 +96,7 @@ void normalizeProbabilities(int mode) {
 	// grid squares
 	sum = sum / 42;
 	// Now we update to put data into the struct 
-
+	//Adding a test comment
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 7; j++) {
 			switch (mode) {
