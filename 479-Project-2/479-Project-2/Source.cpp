@@ -7,10 +7,10 @@ int main() {
 	std::cout << "This is a file\n";
 	action a[9];
 	// Generating data into our sequence 
-	for (int i = 1; i < 9; i++) {
-		generateSequence(a[1]);
-	}
-	initializeMazeTest2();
+	//for (int i = 1; i < 9; i++) {
+		//generateSequence(a[1]);
+	//}
+	//initializeMazeTest2();
 	system("pause");
 }
 

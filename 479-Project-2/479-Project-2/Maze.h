@@ -10,7 +10,7 @@ struct mazeTile {
 	float prob;
 	char row;
 	int col;
-	string id = row + to_string(col);
+	string id = string(1, row) + to_string(col);
 	bool blocked = false;
 	const string blocked_text = "####";
 };
