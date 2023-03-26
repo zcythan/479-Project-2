@@ -1,11 +1,16 @@
 #include "Header.h"
+#include "Maze.h"
 
 extern mazeSquare maze[5][6];
 
 int main() {
 
-	std::cout << "This is a file\n";
-	action a[9];
+	Maze m = Maze();
+
+	m.print();
+
+	//std::cout << "This is a file\n";
+	//action a[9];
 	// Generating data into our sequence 
 	//for (int i = 1; i < 9; i++) {
 		//generateSequence(a[1]);

@@ -2,15 +2,16 @@
 #include<iostream>
 #include<list>
 #include<string>
+#include<iomanip>
 
 using namespace std;
 
 
 struct mazeTile {
-	float prob;
-	char row;
-	int col;
-	string id = string(1, row) + to_string(col);
+	float prob = -1;
+	char row = -1;
+	int col = -1;
+	string id = "";
 	bool blocked = false;
 	const string blocked_text = "####";
 };
@@ -23,5 +24,6 @@ private:
 public:
 	Maze();
 	void buildMaze();
+	void print();
 
 };
