@@ -20,6 +20,8 @@ void Maze::buildMaze() {
 	}
 }
 
+
+
 void Maze::initialMaze() {
 	string blockedIds[22] = { "a2", "a3", "a4", "b1", "b2", "b3", "b7", "c1", "c2", "c6", "c7",
 							"d1", "d6", "d7", "e4", "e5", "e6", "e7", "f3", "f4", "f5", "f6"};
@@ -49,7 +51,7 @@ void Maze::print() {
 			cout << t.prob << " ";
 		}
 		cnt++;
-		if (cnt % 7 == 0) { // add newline after every 7 tiles
+		if (cnt % 7 == 0) { 
 			cout << endl;
 		}
 	}
