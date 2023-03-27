@@ -3,6 +3,7 @@
 #include<list>
 #include<string>
 #include<iomanip>
+#include<vector>
 
 using namespace std;
 
@@ -26,6 +27,7 @@ public:
 	Maze();
 	void buildMaze();
 	void print();
+	vector<string> getOpenIds();
 	void updateProb(string id, float nProb);
 	bool checkObs(string id, char dir);
 	float getProb(string id);

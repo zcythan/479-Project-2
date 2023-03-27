@@ -70,6 +70,16 @@ bool Maze::checkObs(string id, char dir) {
 	return true;
 }
 
+vector<string> Maze::getOpenIds() {
+	vector<string> retList;
+	for (mazeTile t : maze) {
+		if (!t.blocked) {
+			retList.push_back(t.id);
+		}
+	}
+	return retList;
+}
+
 mazeTile* Maze::findTile(string id) {
 	for (mazeTile &t : maze) {
 		if (t.id == id) {

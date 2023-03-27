@@ -1,7 +1,7 @@
 #include "Header.h"
 #include "Maze.h"
 
-extern mazeSquare maze[5][6];
+//extern mazeSquare maze[5][6];
 
 int main() {
 
@@ -17,63 +17,14 @@ int main() {
 	m.updateProb("a5", 7.453);
 	cout << "a5 probability: " << m.getProb("a5") << endl;
 
-	//std::cout << "This is a file\n";
-	//action a[9];
-	// Generating data into our sequence 
-	//for (int i = 1; i < 9; i++) {
-		//generateSequence(a[1]);
-	//}
-	//initializeMazeTest2();
 	system("pause");
 }
 
-// Pass this function the current square location and what it senses.
-// This is probably going to be called in a loop while generating the final output
-/*std::string move(std::string, std::string) {
-	// Calculate probability of moving to the square
-	//
 
-}*/
+//All BELOW UNTIL LINE 79 STILL NEEDS TO BE MOVED INTO A CLASS/ADPATED
+//LINE 79 AND BELOW HAS ALREADY BEEN MOVED.
 
-// I was thinking of how to make this dynamic.
-// The menu will be the same thing each time, just the specific integer we care about changes 
-// First menu is initLocProb, second is Filtering after Evidence, etc. 
-// We print off at least 9 menus 
-// I considered labeling them 0-8, passing that integer, and then having a switch case decide 
-// Ex, pass function 0 and it will print the first menu, which would be InitLocProb 
-void generateMenu(int menu) {
-	switch (menu) {
-	case 0:
-		std::cout << "This is the Initial Location Probability Menu\n";
-		break;
-	case 1:
-		std::cout << "This is the first filtering after evidence menu\n";
-		break;
-		// etc...
-	}
-
-}
-
-// I have no idea how we are going to pass information to and from the functions below.
-// We could work out of a file, in and out, 
-// Pass arguments and returns as strings, ints, or just use globals 
-
-// Comes up with the probability that we are starting within each square of the maze 
-void generateInitLocProbabilities() {
-	// Takes accuracy probability 
-	// Sums the probability of all squares
-	// Each square's probability by the sum
-	// Multiplies by 100 to come up with a percentage 
-	// Assigns percentage to relevant squares 
-
-}
-
-// Passing a single node at a time 
-// dir = which direction we are looking at. 1 = west, 2 = north, 3 = east, 4 = south
-/*void generatePrediction(maze m, int dir) {
-
-}*/
-
+/*
 // Generates decimal probabilities from filtering 
 void generateFiltering() {
 
@@ -124,6 +75,12 @@ void normalizeProbabilities(int mode) {
 	}
 
 }
+*/
+
+//ALL BELOW ALREADY MOVED INTO CLASS
+
+
+/*
 
 // Initially initializes data into the maze, such as which blocks are neighbors to each other
 // Modified to snipe out grid squares that are obstacles and tag them
@@ -211,6 +168,10 @@ void generateSequence(action a) {
 	}
 }
 
+
+
+*/
+/*
 void initializeBruteForce() {
 	// manually initializing because the logical function was weird 
 	// Row A
@@ -512,121 +473,5 @@ void initializeBruteForce() {
 	maze[5][6].east = "\0";
 	maze[5][6].south = "E7";
 	maze[5][6].obstacle = 0;
-
-}
-
-
-// Abandoned 
-// Feel free to turn this into a class method if we go that route
-// I am manually initializing into program memory, but alternatively, 
-// We can generate a file that has this information and then read the file in to memory
-// Not loading in the sensing yet 
-// We could create a whole new .cpp file to dump this in because it's not pretty to look at
-/*void initializeMazeData() {
-	// Every row is row-1, column is column-1, because we start counting at 0
-
-	// Row A
-	maze[0, 0].ID = "A1";
-	maze[0, 0].east = "A2", maze[0, 0].north = "B1";	// West, South = nullptr
-	maze[0, 0].obstacle = 0;
-	maze[1, 0].ID = "A2";
-	maze[1, 0].west = "A1", maze[1, 0].east = "A3", maze[1, 0].north = "B2";	// South = nullptr
-	maze[1, 0].obstacle = 1;
-	maze[2, 0].ID = "A3";
-	maze[2, 0].west = "A2", maze[2, 0].east = "A4", maze[2, 0].north = "B3";	// South = nullptr
-	maze[2, 0].obstacle = 1;
-	maze[3, 0].ID = "A4";
-	maze[3, 0].west = "A3", maze[3, 0].east = "A5", maze[3, 0].north = "B4";	// South = nullptr
-	maze[3, 0].obstacle = 1;
-	maze[4, 0].ID = "A5";
-	maze[4, 0].west = "A4", maze[4, 0].east = "A6", maze[4, 0].north = "B5";	// South = nullptr
-	maze[4, 0].obstacle = 0;
-	maze[5, 0].ID = "A6";
-	maze[5, 0].west = "A5", maze[5, 0].east = "A7", maze[5, 0].north = "B6";	// South = nullptr
-	maze[5, 0].obstacle = 0;
-	maze[6, 0].ID = "A7";
-	maze[6, 0].west = "A6", maze[6, 0].north = "B6";	// East, South = nullptr
-	maze[6, 0].obstacle = 0;
-
-	// Row B
-	maze[0, 1].ID = "B1";
-	maze[0, 1].east = "B2", maze[0, 1].north = "C1", maze[0, 1].south = "A1"; // West = nullptr
-	maze[0, 1].obstacle = 1;
-	maze[1, 1].ID = "B2";
-	maze[1, 1].west = "B1", maze[1, 1].north = "C2", maze[1, 1].east = "B3", maze[1, 1].south = "A2";
-	maze[1, 1].obstacle = 1;
-	maze[2, 1].ID = "B3";
-	maze[2, 1].west = "B2", maze[2, 1].north = "C3", maze[2, 1].east = "B4", maze[2, 1].south = "A3";
-	maze[2, 1].obstacle = 1;
-	maze[3, 1].ID = "B4";
-	maze[3, 1].west = "B3", maze[3, 1].north = "C4", maze[3, 1].east = "B5", maze[3, 1].south = "A4";
-	maze[3, 1].obstacle = 0;
-	maze[4, 1].ID = "B5";
-	maze[4, 1].west = "B4", maze[4, 1].north = "C5", maze[4, 1].east = "B6", maze[4, 1].south = "A5";
-	maze[4, 1].obstacle = 0;
-	maze[5, 1].ID = "B6";
-	maze[5, 1].west = "B5", maze[5, 1].north = "C6", maze[5, 1].east = "B7", maze[5, 1].south = "A5";
-	maze[5, 1].obstacle = 0;
-	maze[6, 1].ID = "B7";
-	maze[6, 1].west = "B6", maze[6, 1].north = "C7", maze[6, 1].south = "A5"; // East = nullptr
-	maze[6, 1].obstacle = 1;
-
-
-
-
-	initializeActualObstacles();
-}
-*/
-
-// Doing this using better logic 
-// Untested
-// Does not add obstacles in 
-/*void initializeMazeTest() {
-
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 7; j++) {
-			maze[i][j].ID = char('A' + i) + std::to_string(j + 1);
-
-			// Set neighbors
-			if (j > 0) { // West neighbor
-				maze[i][j].west = char('A' + i) + std::to_string(j);
-			}
-			else {
-				maze[i][j].west = "\0";
-			}
-			if (i > 0) { // North neighbor
-				maze[i][j].north = char('A' + i - 1) + std::to_string(j + 1);
-			}
-			else {
-				maze[i][j].north = "\0";
-			}
-			if (j < 6) { // East neighbor
-				maze[i][j].east = char('A' + i) + std::to_string(j + 2);
-			}
-			else {
-				maze[i][j].east = "\0";
-			}
-			if (i < 5) { // South neighbor
-				maze[i][j].south = char('A' + i + 1) + std::to_string(j + 1);
-			}
-			else {
-				maze[i][j].south = "\0";
-			}
-		}
-	}
-}
-*/
-
-// Checks neighbor.obstacle to decide if its a<direction> is 0 or 1
-// I was doing this by hand but it got to be too annoying
-/*void initializeActualObstacles() {
-
-	for (int i = 0, j = 0; j < 5; j++) {
-
-		if (j == 5) {
-			i++, j = 0;
-		}
-	}
-
-}
-*/
+	
+}*/
