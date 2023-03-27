@@ -126,3 +126,40 @@ void Maze::print() {
 	}
 	cout << endl;
 }
+
+// Returns a list of edges for a given direction
+vector<string> Maze::getDirEdges(int n) {
+	// 1 = W, 2 = N, 3 = E, 4 = S
+	vector<string> retList;
+	retList[0] = "\0";
+	switch (n) {
+	case 1:
+		// West Edges
+		retList = { "A1", "B1", "C1", "D1", "E1", "F1"};
+		break;
+	case 2:
+		// North Edges
+		retList = { "F1", "F2", "F3", "F4", "F5", "F6", "F7" };		
+		break;
+	case 3:
+		// East Edges
+		retList = { "A7", "B7", "C7", "D7", "E7", "F7" };
+		break;
+	case 4:
+		// South Edges
+		retList = { "A1", "A2", "A3", "A4", "A5", "A6", "A6"};
+		break;
+	}
+	return retList;
+}
+
+bool Maze::isEdge(std::string id, int n) {
+	vector<string> edges;
+	edges = getDirEdges(n);
+		if (std::find(edges.begin(), edges.end(), id) != edges.end()) {
+			// All movement in the west direction gets bounced back to starting pos
+			return true;
+		}
+		else
+			return false;
+}

@@ -4,6 +4,7 @@ Calculator::Calculator() {
 	maze = Maze();
 }
 
+// Turns all probabilities of a given type into 
 vector<double> Calculator::normalize(vector<double> probs) {
 	double sum = 0;
 	for (double prob : probs) {
@@ -21,6 +22,7 @@ void Calculator::filter(vector<int> data) {
 	//gets vector of all tile Ids that are unblocked.
 	vector<string> openIds = maze.getOpenIds();
 	vector<double> newProbs;
+
 	for (string id : openIds) {
 		//calculate the new probability here based on sensor data.
 		double tProb = 0;
@@ -67,6 +69,39 @@ void Calculator::filter(vector<int> data) {
 	//here we normalize
 	newProbs = normalize(newProbs);
 	//update maze
+	for (int i = 0; i < openIds.size(); i++) {
+		maze.updateProb(openIds[i], newProbs[i]);
+	}
+}
+
+void Calculator::prediction(int dir) {
+	// dir: 1 = W, 2 = N, 3 = E, 4 = S
+	vector<string> openIds = maze.getOpenIds();
+	// Resetting probability container
+	for (string id : openIds) {
+		for (int i = 0; i < sizeof(4) / sizeof(char); i++) {
+			maze.updateProb(id, 1);
+		}
+	}
+	// 1 = W, 2 = N, 3 = E, 4 = S
+	bool edges[4];
+
+	vector<double> newProbs;
+	// Chances that our robot will go each direction, L S R
+	double pNoBounce[3] = {0.15, 0.75, 0.1};
+
+	for (string id : openIds) {
+		// Probability of successful move
+		double mProb = 0;
+		for (int i = 0; i < sizeof(4) / sizeof(char); i++) {
+			for (int j = 1; j < 4; j++) {
+				edges[j] = maze.isEdge(id, j);
+			}
+			
+		}
+		newProbs.push_back(mProb);
+	}
+	newProbs = normalize(newProbs);
 	for (int i = 0; i < openIds.size(); i++) {
 		maze.updateProb(openIds[i], newProbs[i]);
 	}

@@ -16,7 +16,11 @@ int main() {
 	cout << endl;
 	c.filter({ 0, 0 ,0, 0 });
 	c.printMaze();
-	
+
+	std::cout << "Prediction after Action N\n" << std::endl;
+	c.prediction(2);
+	c.printMaze();
+
 	system("pause");
 	return 0;
 }
