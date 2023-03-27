@@ -20,10 +20,14 @@ class Maze {
 private:
 	list<mazeTile> maze;
 	void initialMaze();
+	mazeTile* findTile(string id);
 
 public:
 	Maze();
 	void buildMaze();
 	void print();
+	void updateProb(string id, float nProb);
+	bool checkObs(string id, char dir);
+	float getProb(string id);
 
 };

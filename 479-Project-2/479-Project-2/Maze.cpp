@@ -35,6 +35,63 @@ void Maze::initialMaze() {
 	}
 }
 
+//use n for north, w west, ect ect. feel free to redo functionality if theres more convient way it could return data or something
+bool Maze::checkObs(string id, char dir) {
+	mazeTile t = *findTile(id);
+	if (dir == 'n') {
+		char nRow = t.row + 1;
+		if (nRow < 'g') {
+			return findTile((string(1, nRow) + to_string(t.col)))->blocked;
+		}
+		return true;
+	}
+	else if (dir == 's') {
+	    char nRow = t.row - 1;
+		if (nRow > '`') {
+			return findTile((string(1, nRow) + to_string(t.col)))->blocked;
+		}
+		return true;
+	}
+	else if (dir == 'e') {
+		int nCol = t.col + 1;
+		if (nCol < 8) {
+			return findTile((string(1, t.row) + to_string(nCol)))->blocked;
+		}
+		return true;
+	}
+	else if (dir == 'w') {
+		int nCol = t.col - 1;
+		if (nCol > 0) {
+			return findTile((string(1, t.row) + to_string(nCol)))->blocked;
+		}
+		return true;
+	}
+
+	return true;
+}
+
+mazeTile* Maze::findTile(string id) {
+	for (mazeTile &t : maze) {
+		if (t.id == id) {
+			return &t;
+		}
+	}
+	throw invalid_argument("Value not found");
+}
+
+//returns probability of a tile.
+float Maze::getProb(string id){
+	return findTile(id)->prob;
+}
+
+//changed probability value at a tile in the maze given Id and new probability. 
+void Maze::updateProb(string id, float nProb) {
+	mazeTile* t = findTile(id);
+	if (!t->blocked) {
+		t->prob = nProb;
+	}
+}
+
 void Maze::print() {
 	int cnt = 0;
 	for (mazeTile t : maze) {
