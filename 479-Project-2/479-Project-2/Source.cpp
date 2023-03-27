@@ -9,10 +9,10 @@ int main() {
 
 	m.print();
 	cout << endl;
-	cout << "Does a5 have obs to the north?: " << m.checkObs("a5", 'n') << endl;
-	cout << "Does a5 have obs to the west?: " << m.checkObs("a5", 'w') << endl;
-	cout << "Does a5 have obs to the south?: " << m.checkObs("a5", 's') << endl;
-	cout << "Does a5 have obs to the east?: " << m.checkObs("a5", 'e') << endl;
+	cout << "Does e3 have obs to the north?: " << m.checkObs("e3", 'n') << endl;
+	cout << "Does e3 have obs to the west?: " << m.checkObs("e3", 'w') << endl;
+	cout << "Does e3 have obs to the south?: " << m.checkObs("e3", 's') << endl;
+	cout << "Does e3 have obs to the east?: " << m.checkObs("e3", 'e') << endl;
 	cout << "a5 probability: " << m.getProb("a5") << endl;
 	m.updateProb("a5", 7.453);
 	cout << "a5 probability: " << m.getProb("a5") << endl;
