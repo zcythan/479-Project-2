@@ -70,6 +70,40 @@ bool Maze::checkObs(string id, char dir) {
 	return true;
 }
 
+std::string Maze::getNeighbor(string id, char dir) {
+	mazeTile t = *findTile(id);
+	std::string id;
+	if (dir == 'n') {
+		char nRow = t.row + 1;
+		if (nRow < 'g') {
+			id = findTile((string(1, nRow) + to_string(t.col)))->blocked;
+		}
+		return id;
+	}
+	else if (dir == 's') {
+		char nRow = t.row - 1;
+		if (nRow > '`') {
+			id = findTile((string(1, nRow) + to_string(t.col)))->blocked;
+		}
+		return id;
+	}
+	else if (dir == 'e') {
+		int nCol = t.col + 1;
+		if (nCol < 8) {
+			id =  findTile((string(1, t.row) + to_string(nCol)))->blocked;
+		}
+		return id;
+	}
+	else if (dir == 'w') {
+		int nCol = t.col - 1;
+		if (nCol > 0) {
+			id = findTile((string(1, t.row) + to_string(nCol)))->blocked;
+		}
+		return id;
+	}
+	return id;
+}
+
 vector<string> Maze::getOpenIds() {
 	vector<string> retList;
 	for (mazeTile t : maze) {
@@ -128,7 +162,7 @@ void Maze::print() {
 }
 
 // Returns a list of edges for a given direction
-vector<string> Maze::getDirEdges(int n) {
+/*vector<string> Maze::getDirEdges(int n) {
 	// 1 = W, 2 = N, 3 = E, 4 = S
 	vector<string> retList;
 	retList[0] = "\0";
@@ -163,3 +197,4 @@ bool Maze::isEdge(std::string id, int n) {
 		else
 			return false;
 }
+*/

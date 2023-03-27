@@ -74,7 +74,7 @@ void Calculator::filter(vector<int> data) {
 	}
 }
 
-void Calculator::prediction(int dir) {
+void Calculator::prediction(char dir) {
 	// dir: 1 = W, 2 = N, 3 = E, 4 = S
 	vector<string> openIds = maze.getOpenIds();
 	// Resetting probability container
@@ -84,24 +84,72 @@ void Calculator::prediction(int dir) {
 		}
 	}
 	// 1 = W, 2 = N, 3 = E, 4 = S
-	bool edges[4];
+	double oldProb = 0;
+
+	char left = '\0', right = '\0', straight = '\0';
+	switch (dir) {
+		// We are going west
+	case 'w':
+		left = 's', right = 'n', straight = 'w';
+		break;
+		// Going north
+	case 'n':
+		left = 'w', right = 'e', straight = 'n';
+		break;
+		// going east
+	case 'e':
+		left = 'n', right = 's', straight = 'e';
+		break;
+		// going south
+	case 's':
+		left = 'e', right = 'w', straight = 's';
+		break;
+	}
 
 	vector<double> newProbs;
 	// Chances that our robot will go each direction, L S R
 	double pNoBounce[3] = {0.15, 0.75, 0.1};
-
+	std::string neighbor = "\0";
 	for (string id : openIds) {
 		// Probability of successful move
 		double mProb = 0;
 		for (int i = 0; i < sizeof(4) / sizeof(char); i++) {
-			for (int j = 1; j < 4; j++) {
+			/*for (int j = 1; j < 4; j++) {
 				edges[j] = maze.isEdge(id, j);
 			}
-			
+			*/
+			if (maze.checkObs(id, left)) {
+				// neighbor's probability goes up by prob*0.15
+				neighbor = maze.getNeighbor(id, dir);
+				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.15);
+			}
+			else {
+				maze.updateProb(id, maze.getProb(id) * 0.15);
+			}
+			if (maze.checkObs(id, right)) {
+				// neighbor's probability goes up
+				neighbor = maze.getNeighbor(id, dir);
+				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.1);
+			}
+			else {
+				maze.updateProb(id, maze.getProb(id) * 0.1);
+			}
+			if (maze.checkObs(id, straight)) {
+				// neighbor's probability goes up 
+				neighbor = maze.getNeighbor(id, dir);
+				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.75);
+			}
+			else {
+				maze.updateProb(id, maze.getProb(id) * 0.75);
+			}
 		}
-		newProbs.push_back(mProb);
 	}
+	for (string id : openIds) {
+		newProbs.push_back(maze.getProb(id));
+	}
+
 	newProbs = normalize(newProbs);
+
 	for (int i = 0; i < openIds.size(); i++) {
 		maze.updateProb(openIds[i], newProbs[i]);
 	}

@@ -27,9 +27,10 @@ public:
 	void buildMaze();
 	void print();
 	vector<string> getOpenIds();
-	vector<string> getDirEdges(int n);
-	bool isEdge(std::string id, int n);
+	//vector<string> getDirEdges(int n);
+	//bool isEdge(std::string id, int n);
 	void updateProb(string id, double nProb);
 	bool checkObs(string id, char dir);
 	double getProb(string id);
+	std::string getNeighbor(string id, char dir);
 };
