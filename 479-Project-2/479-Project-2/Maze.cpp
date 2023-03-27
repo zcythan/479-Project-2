@@ -6,7 +6,6 @@ Maze::Maze() {
 	initialMaze();
 }
 
-
 void Maze::buildMaze() {
 	char rows[6] = { 'a', 'b','c','d','e', 'f'};
 	for (int i = 0; i < sizeof(rows)/sizeof(char); i++) {
@@ -19,8 +18,6 @@ void Maze::buildMaze() {
 		}
 	}
 }
-
-
 
 void Maze::initialMaze() {
 	string blockedIds[22] = { "a2", "a3", "a4", "b1", "b2", "b3", "b7", "c1", "c2", "c6", "c7",
