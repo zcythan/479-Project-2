@@ -9,12 +9,12 @@ using namespace std;
 
 
 struct mazeTile {
-	float prob = -1;
+	double prob = -1;
 	char row = -1;
 	int col = -1;
 	string id = "";
 	bool blocked = false;
-	const string blocked_text = "####";
+	const string blocked_text = "#####";
 };
 
 class Maze {
@@ -28,8 +28,8 @@ public:
 	void buildMaze();
 	void print();
 	vector<string> getOpenIds();
-	void updateProb(string id, float nProb);
+	void updateProb(string id, double nProb);
 	bool checkObs(string id, char dir);
-	float getProb(string id);
+	double getProb(string id);
 
 };

@@ -90,12 +90,12 @@ mazeTile* Maze::findTile(string id) {
 }
 
 //returns probability of a tile.
-float Maze::getProb(string id){
+double Maze::getProb(string id){
 	return findTile(id)->prob;
 }
 
 //changed probability value at a tile in the maze given Id and new probability. 
-void Maze::updateProb(string id, float nProb) {
+void Maze::updateProb(string id, double nProb) {
 	mazeTile* t = findTile(id);
 	if (!t->blocked) {
 		t->prob = nProb;
@@ -112,7 +112,12 @@ void Maze::print() {
 		else {
 			cout << fixed;
 			cout << setprecision(2);
-			cout << t.prob << " ";
+			if (t.prob < 10) {
+				cout << t.prob << "  ";
+			}
+			else {
+				cout << t.prob << " ";
+			}
 		}
 		cnt++;
 		if (cnt % 7 == 0) { 
