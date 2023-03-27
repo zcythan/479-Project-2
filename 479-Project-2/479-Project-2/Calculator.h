@@ -5,7 +5,6 @@ using namespace std;
 
 class Calculator {
 private:
-	Maze maze;
 	//constants for probabilities.
 	const double seeObsCor = 0.9;
 	const double seeObsInCor = 0.05;
@@ -14,6 +13,7 @@ private:
 	const double straight = 0.75;
 	const double dLeft = 0.15;
 	const double dRight = 0.10;
+	Maze maze;
 	vector<double> normalize(vector<double> probs);
 
 public:

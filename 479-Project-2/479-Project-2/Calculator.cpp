@@ -15,15 +15,14 @@ vector<double> Calculator::normalize(vector<double> probs) {
 	return probs;
 }
 
+//It will produce a corresponding vector of new probabilities given sensing data.
 void Calculator::filter(vector<int> data) {
-	//W, N ,E, S
 	char dirKey[4] = { 'w', 'n', 'e', 's' };
 	//gets vector of all tile Ids that are unblocked.
-	//It will produce a corresponding vector of new probabilities given sensing data.
 	vector<string> openIds = maze.getOpenIds();
 	vector<double> newProbs;
 	for (string id : openIds) {
-		//calculate the new probability here based on data.
+		//calculate the new probability here based on sensor data.
 		double tProb = 0;
 		for (int i = 0; i < sizeof(dirKey) / sizeof(char); i++) {
 			//If it senses no obstical and is correct.
@@ -65,7 +64,6 @@ void Calculator::filter(vector<int> data) {
 		}
 		newProbs.push_back(tProb);
 	}
-
 	//here we normalize
 	newProbs = normalize(newProbs);
 	//update maze

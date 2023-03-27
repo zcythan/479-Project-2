@@ -94,7 +94,7 @@ double Maze::getProb(string id){
 	return findTile(id)->prob;
 }
 
-//changed probability value at a tile in the maze given Id and new probability. 
+//changes probability value at a tile in the maze given Id and new probability. 
 void Maze::updateProb(string id, double nProb) {
 	mazeTile* t = findTile(id);
 	if (!t->blocked) {
