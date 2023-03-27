@@ -15,7 +15,7 @@ vector<double> Calculator::normalize(vector<double> probs) {
 	return probs;
 }
 
-void Calculator::filter(int data[4]) {
+void Calculator::filter(vector<int> data) {
 	//W, N ,E, S
 	char dirKey[4] = { 'w', 'n', 'e', 's' };
 	//gets vector of all tile Ids that are unblocked.

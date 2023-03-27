@@ -18,7 +18,7 @@ private:
 
 public:
 	Calculator();
-	void filter(int data[4]);
+	void filter(vector<int> data);
 	void printMaze();
 	
 	//functions that will be used to calculate distributions will live here and will reference the maze variable for current maze state.
