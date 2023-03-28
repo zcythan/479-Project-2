@@ -114,12 +114,28 @@ void Calculator::prediction(char dir) {
 	for (string id : openIds) {
 		// Probability of successful move
 		double mProb = 0;
-		for (int i = 1; i < 4; i++) {
+		std::cout << "I am " << id << ", my left: ";
+
+		neighbor = maze.getNeighbor(id, left);
+		maze.updateProb(neighbor, (maze.getProb(id) * 0.15));
+		std::cout << neighbor << ", Right: ";
+
+		neighbor = maze.getNeighbor(id, right);
+		maze.updateProb(neighbor, (maze.getProb(id) * 0.1));
+		std::cout << neighbor << ", Forward: ";
+
+		neighbor = maze.getNeighbor(id, straight);
+		maze.updateProb(neighbor, (maze.getProb(id) * 0.15));
+		std::cout << neighbor << ".\n";
+
+		//for (int i = 1; i < 4; i++) {
 			/*for (int j = 1; j < 4; j++) {
 				edges[j] = maze.isEdge(id, j);
 			}
 			*/
 			//If it senses no obstical and is correct.
+
+			/*
 			std::cout << "My ID is: " << id << ", Turning " << dir << "." << std::endl;
 			std::cout << "My left: ";
 			if (maze.checkObs(id, left)) {
@@ -156,7 +172,8 @@ void Calculator::prediction(char dir) {
 				std::cout << neighbor << ".\n";
 				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.75);
 			}
-		}
+			*/
+		//}
 	}
 	for (string id : openIds) {
 		newProbs.push_back(maze.getProb(id));
