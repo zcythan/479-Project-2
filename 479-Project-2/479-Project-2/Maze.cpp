@@ -70,37 +70,37 @@ bool Maze::checkObs(string id, char dir) {
 	return true;
 }
 
-std::string Maze::getNeighbor(string id, char dir) {
+string Maze::getNeighbor(string id, char dir) {
 	mazeTile t = *findTile(id);
-	std::string id;
 	if (dir == 'n') {
 		char nRow = t.row + 1;
 		if (nRow < 'g') {
-			id = findTile((string(1, nRow) + to_string(t.col)))->blocked;
+			return findTile((string(1, nRow) + to_string(t.col)))->id;
 		}
 		return id;
 	}
 	else if (dir == 's') {
 		char nRow = t.row - 1;
 		if (nRow > '`') {
-			id = findTile((string(1, nRow) + to_string(t.col)))->blocked;
+			return findTile((string(1, nRow) + to_string(t.col)))->id;
 		}
 		return id;
 	}
 	else if (dir == 'e') {
 		int nCol = t.col + 1;
 		if (nCol < 8) {
-			id =  findTile((string(1, t.row) + to_string(nCol)))->blocked;
+			return findTile((string(1, t.row) + to_string(nCol)))->id;
 		}
 		return id;
 	}
 	else if (dir == 'w') {
 		int nCol = t.col - 1;
 		if (nCol > 0) {
-			id = findTile((string(1, t.row) + to_string(nCol)))->blocked;
+			return findTile((string(1, t.row) + to_string(nCol)))->id;
 		}
 		return id;
 	}
+
 	return id;
 }
 

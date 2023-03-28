@@ -79,9 +79,7 @@ void Calculator::prediction(char dir) {
 	vector<string> openIds = maze.getOpenIds();
 	// Resetting probability container
 	for (string id : openIds) {
-		for (int i = 0; i < sizeof(4) / sizeof(char); i++) {
-			maze.updateProb(id, 1);
-		}
+		maze.updateProb(id, 1);
 	}
 	// 1 = W, 2 = N, 3 = E, 4 = S
 	double oldProb = 0;
@@ -109,11 +107,11 @@ void Calculator::prediction(char dir) {
 	vector<double> newProbs;
 	// Chances that our robot will go each direction, L S R
 	double pNoBounce[3] = {0.15, 0.75, 0.1};
-	std::string neighbor = "\0";
+	string neighbor = "\0";
 	for (string id : openIds) {
 		// Probability of successful move
 		double mProb = 0;
-		for (int i = 0; i < sizeof(4) / sizeof(char); i++) {
+		for (int i = 0; i < 4; i++) {
 			/*for (int j = 1; j < 4; j++) {
 				edges[j] = maze.isEdge(id, j);
 			}
