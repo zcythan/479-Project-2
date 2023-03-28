@@ -27,7 +27,6 @@ void Calculator::filter(vector<int> data) {
 		//calculate the new probability here based on sensor data.
 		double tProb = 0;
 		for (int i = 0; i < sizeof(dirKey) / sizeof(char); i++) {
-			//If it senses no obstical and is correct.
 			if (maze.checkObs(id, dirKey[i]) == static_cast<bool>(data[i]) && data[i] == 0) {
 				if (tProb == 0) {
 					tProb = seeNoObsCor;
@@ -64,6 +63,8 @@ void Calculator::filter(vector<int> data) {
 				}
 			}
 		}
+		if (tProb == 1)
+			tProb = 0;
 		newProbs.push_back(tProb);
 	}
 	//here we normalize
@@ -83,6 +84,8 @@ void Calculator::prediction(char dir) {
 	}
 	// 1 = W, 2 = N, 3 = E, 4 = S
 	double oldProb = 0;
+
+	// All std::couts are for debugging 
 
 	char left = '\0', right = '\0', straight = '\0';
 	switch (dir) {
@@ -116,32 +119,42 @@ void Calculator::prediction(char dir) {
 				edges[j] = maze.isEdge(id, j);
 			}
 			*/
+			//If it senses no obstical and is correct.
+			std::cout << "My ID is: " << id << ", Turning " << dir << "." << std::endl;
+			std::cout << "My left: ";
 			if (maze.checkObs(id, left)) {
-				// neighbor's probability goes up by prob*0.15
-				neighbor = maze.getNeighbor(id, dir);
-				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.15);
-			}
-			else {
-				neighbor = maze.getNeighbor(id, dir);
+				std::cout << "Self; Right: ";
+				//neighbor = maze.getNeighbor(id, dir);
 				maze.updateProb(id, maze.getProb(id) * 0.15);
 			}
-			if (maze.checkObs(id, right)) {
-				// neighbor's probability goes up
-				neighbor = maze.getNeighbor(id, dir);
-				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.1);
-			}
 			else {
+				// neighbor's probability goes up by prob*0.15
 				neighbor = maze.getNeighbor(id, dir);
+				std::cout << neighbor << "; Right:";
+				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.15);
+			}
+			if (maze.checkObs(id, right)) {
+				std::cout << "Self; Front: ";
+				//neighbor = maze.getNeighbor(id, dir);
 				maze.updateProb(id, maze.getProb(id) * 0.1);
 			}
-			if (maze.checkObs(id, straight)) {
-				// neighbor's probability goes up 
+			else {
+
+				// neighbor's probability goes up
 				neighbor = maze.getNeighbor(id, dir);
-				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.75);
+				std::cout << neighbor << "; front:";
+				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.1);
+			}
+			if (maze.checkObs(id, straight)) {
+				std::cout << " self\n";
+				//neighbor = maze.getNeighbor(id, dir);
+				maze.updateProb(id, maze.getProb(id) * 0.75);
 			}
 			else {
+				// neighbor's probability goes up 
 				neighbor = maze.getNeighbor(id, dir);
-				maze.updateProb(id, maze.getProb(id) * 0.75);
+				std::cout << neighbor << ".\n";
+				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.75);
 			}
 		}
 	}
