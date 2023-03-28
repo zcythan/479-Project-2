@@ -111,7 +111,7 @@ void Calculator::prediction(char dir) {
 	for (string id : openIds) {
 		// Probability of successful move
 		double mProb = 0;
-		for (int i = 0; i < 4; i++) {
+		for (int i = 1; i < 4; i++) {
 			/*for (int j = 1; j < 4; j++) {
 				edges[j] = maze.isEdge(id, j);
 			}
@@ -122,6 +122,7 @@ void Calculator::prediction(char dir) {
 				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.15);
 			}
 			else {
+				neighbor = maze.getNeighbor(id, dir);
 				maze.updateProb(id, maze.getProb(id) * 0.15);
 			}
 			if (maze.checkObs(id, right)) {
@@ -130,6 +131,7 @@ void Calculator::prediction(char dir) {
 				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.1);
 			}
 			else {
+				neighbor = maze.getNeighbor(id, dir);
 				maze.updateProb(id, maze.getProb(id) * 0.1);
 			}
 			if (maze.checkObs(id, straight)) {
@@ -138,6 +140,7 @@ void Calculator::prediction(char dir) {
 				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.75);
 			}
 			else {
+				neighbor = maze.getNeighbor(id, dir);
 				maze.updateProb(id, maze.getProb(id) * 0.75);
 			}
 		}
@@ -146,8 +149,7 @@ void Calculator::prediction(char dir) {
 		newProbs.push_back(maze.getProb(id));
 	}
 
-	newProbs = normalize(newProbs);
-
+		newProbs = normalize(newProbs);
 	for (int i = 0; i < openIds.size(); i++) {
 		maze.updateProb(openIds[i], newProbs[i]);
 	}

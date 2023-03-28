@@ -100,7 +100,6 @@ string Maze::getNeighbor(string id, char dir) {
 		}
 		return id;
 	}
-
 	return id;
 }
 
