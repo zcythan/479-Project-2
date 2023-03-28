@@ -74,28 +74,28 @@ string Maze::getNeighbor(string id, char dir) {
 	mazeTile t = *findTile(id);
 	if (dir == 'n') {
 		char nRow = t.row + 1;
-		if (nRow < 'g') {
+		if (nRow < 'g' && !findTile((string(1, nRow) + to_string(t.col)))->blocked) {
 			return findTile((string(1, nRow) + to_string(t.col)))->id;
 		}
 		return id;
 	}
 	else if (dir == 's') {
 		char nRow = t.row - 1;
-		if (nRow > '`') {
+		if (nRow > '`' && findTile((string(1, nRow) + to_string(t.col)))->blocked) {
 			return findTile((string(1, nRow) + to_string(t.col)))->id;
 		}
 		return id;
 	}
 	else if (dir == 'e') {
 		int nCol = t.col + 1;
-		if (nCol < 8) {
+		if (nCol < 8 && findTile((string(1, t.row) + to_string(nCol)))->blocked) {
 			return findTile((string(1, t.row) + to_string(nCol)))->id;
 		}
 		return id;
 	}
 	else if (dir == 'w') {
 		int nCol = t.col - 1;
-		if (nCol > 0) {
+		if (nCol > 0 && findTile((string(1, t.row) + to_string(nCol)))->blocked) {
 			return findTile((string(1, t.row) + to_string(nCol)))->id;
 		}
 		return id;
