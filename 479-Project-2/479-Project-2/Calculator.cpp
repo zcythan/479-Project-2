@@ -75,12 +75,32 @@ void Calculator::filter(vector<int> data) {
 	}
 }
 
+// Returns a sum of all of the probabilities
+double Calculator::getSum() {
+	vector<string> openIds = maze.getOpenIds();
+	double sum = 0;
+	for (string id : openIds) {
+		sum += maze.getProb(id);
+	}
+	return sum;
+}
+
 void Calculator::prediction(char dir) {
 	// dir: 1 = W, 2 = N, 3 = E, 4 = S
 	vector<string> openIds = maze.getOpenIds();
+	// Attmept 4A
+	double prevProb[20]{};
+	double prevProbSum = 0;
+	int i = 0;
+	for (string id : openIds) {
+		prevProb[i] = maze.getProb(id);
+		prevProbSum += prevProb[i];
+		i++;
+	}
+
 	// Resetting probability container
 	for (string id : openIds) {
-		maze.updateProb(id, 1);
+		maze.updateProb(id, 0);
 	}
 	// 1 = W, 2 = N, 3 = E, 4 = S
 	double oldProb = 0;
@@ -107,7 +127,6 @@ void Calculator::prediction(char dir) {
 		break;
 	}
 
-	vector<double> newProbs;
 	// Chances that our robot will go each direction, L S R
 	double pNoBounce[3] = {0.15, 0.75, 0.1};
 	string neighbor = "\0";
@@ -115,25 +134,33 @@ void Calculator::prediction(char dir) {
 		// Probability of successful move
 		double mProb = 0;
 
+		// Attmept 4B
+		neighbor = maze.getNeighbor(id, left);
+		maze.updateProb(neighbor, (maze.getProb(id) + 0.15));
+		neighbor = maze.getNeighbor(id, right);
+		maze.updateProb(neighbor, (maze.getProb(id) + 0.1));
+		neighbor = maze.getNeighbor(id, straight);
+		maze.updateProb(neighbor, (maze.getProb(id) + 0.75));
 
-		// Attempt 2
-		std::cout << "I am " << id << ".\nMy left: ";
+		// Attempt 3
+		/*std::cout << "I am " << id << ".\nMy left: ";
 		neighbor = maze.getNeighbor(id, left);
 		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
-		maze.updateProb(neighbor, (maze.getProb(id) * 0.15));
+		maze.updateProb(neighbor, (maze.getProb(id) + 0.15));
 		std::cout << maze.getProb(neighbor) << std::endl;
 		
 		std::cout << "My right: ";
 		neighbor = maze.getNeighbor(id, right);
 		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
-		maze.updateProb(neighbor, (maze.getProb(id) * 0.1));
+		maze.updateProb(neighbor, (maze.getProb(id) + 0.1));
 		std::cout << maze.getProb(neighbor) << std::endl;
 
 		std::cout << "My front: ";
 		neighbor = maze.getNeighbor(id, straight);
 		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
-		maze.updateProb(neighbor, (maze.getProb(id) * 0.75));
+		maze.updateProb(neighbor, (maze.getProb(id) + 0.75));
 		std::cout << maze.getProb(neighbor) << std::endl;
+		*/
 
 		// Attempt 1 
 		//for (int i = 1; i < 4; i++) {
@@ -183,6 +210,20 @@ void Calculator::prediction(char dir) {
 			*/
 		//}
 	}
+
+	// Attempt 4C
+	double sum = getSum();
+	i = 0;
+	for (string id: openIds) {
+		// maze.updateProb(id, (prevProb[i] * (maze.getProb(id))));
+		maze.updateProb(id, (prevProbSum * (maze.getProb(id))));
+	}
+
+	for (string id : openIds) {
+		maze.updateProb(id, (maze.getProb(id) / sum));
+	}
+
+	/*
 	for (string id : openIds) {
 		newProbs.push_back(maze.getProb(id));
 	}
@@ -190,7 +231,7 @@ void Calculator::prediction(char dir) {
 		newProbs = normalize(newProbs);
 	for (int i = 0; i < openIds.size(); i++) {
 		maze.updateProb(openIds[i], newProbs[i]);
-	}
+	}*/
 }
 
 void Calculator::printMaze() {
