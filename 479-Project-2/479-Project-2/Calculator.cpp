@@ -114,20 +114,28 @@ void Calculator::prediction(char dir) {
 	for (string id : openIds) {
 		// Probability of successful move
 		double mProb = 0;
-		std::cout << "I am " << id << ", my left: ";
 
+
+		// Attempt 2
+		std::cout << "I am " << id << ".\nMy left: ";
 		neighbor = maze.getNeighbor(id, left);
+		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
 		maze.updateProb(neighbor, (maze.getProb(id) * 0.15));
-		std::cout << neighbor << ", Right: ";
-
+		std::cout << maze.getProb(neighbor) << std::endl;
+		
+		std::cout << "My right: ";
 		neighbor = maze.getNeighbor(id, right);
+		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
 		maze.updateProb(neighbor, (maze.getProb(id) * 0.1));
-		std::cout << neighbor << ", Forward: ";
+		std::cout << maze.getProb(neighbor) << std::endl;
 
+		std::cout << "My front: ";
 		neighbor = maze.getNeighbor(id, straight);
-		maze.updateProb(neighbor, (maze.getProb(id) * 0.15));
-		std::cout << neighbor << ".\n";
+		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
+		maze.updateProb(neighbor, (maze.getProb(id) * 0.75));
+		std::cout << maze.getProb(neighbor) << std::endl;
 
+		// Attempt 1 
 		//for (int i = 1; i < 4; i++) {
 			/*for (int j = 1; j < 4; j++) {
 				edges[j] = maze.isEdge(id, j);
