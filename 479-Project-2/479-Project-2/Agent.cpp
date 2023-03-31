@@ -64,16 +64,6 @@ vector<double> Agent::normalize(vector<double> probs) {
 	return probs;
 }
 
-// Returns a sum of all of the probabilities
-double Agent::getSum() {
-	vector<string> openIds = maze.getOpenIds();
-	double sum = 0;
-	for (string id : openIds) {
-		sum += maze.getProb(id);
-	}
-	return sum;
-}
-
 //It will produce a corresponding vector of new probabilities given sensing data.
 void Agent::filter(vector<int> data) {
 	char dirKey[4] = { 'w', 'n', 'e', 's' };

@@ -24,5 +24,4 @@ public:
 	void filter(vector<int> data);
 	void printMaze();
 	void predict(char dir);
-	double getSum();
 };
