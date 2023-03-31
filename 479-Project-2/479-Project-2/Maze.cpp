@@ -5,6 +5,7 @@ Maze::Maze() {
 	initialMaze();
 }
 
+//Builds maze objects into the linked list.
 void Maze::buildMaze() {
 	char rows[6] = { 'a', 'b','c','d','e', 'f'};
 	for (int i = 0; i < sizeof(rows)/sizeof(char); i++) {
@@ -17,7 +18,7 @@ void Maze::buildMaze() {
 		}
 	}
 }
-
+//Initializes the maze structure and initial probabilities.
 void Maze::initialMaze() {
 	string blockedIds[22] = { "a2", "a3", "a4", "b1", "b2", "b3", "b7", "c1", "c2", "c6", "c7",
 							"d1", "d6", "d7", "e4", "e5", "e6", "e7", "f3", "f4", "f5", "f6"};
@@ -33,7 +34,7 @@ void Maze::initialMaze() {
 		}
 	}
 }
-
+//Given a tile ID and a direction char, it returns true or false to whether that direction is blocked.
 bool Maze::checkObs(string id, char dir) {
 	mazeTile t = *findTile(id);
 	if (dir == 'n') {
@@ -67,7 +68,7 @@ bool Maze::checkObs(string id, char dir) {
 
 	return true;
 }
-
+//Given a tile ID and a direction char, it returns the ID in that direction or itself if it's blocked.
 string Maze::getNeighbor(string id, char dir) {
 	mazeTile t = *findTile(id);
 	if (dir == 'n') {
@@ -101,6 +102,7 @@ string Maze::getNeighbor(string id, char dir) {
 	return id;
 }
 
+//Creates a vector of all open (unblocked) Id values in the maze.
 vector<string> Maze::getOpenIds() {
 	vector<string> retList;
 	for (mazeTile t : maze) {
@@ -111,6 +113,7 @@ vector<string> Maze::getOpenIds() {
 	return retList;
 }
 
+//Returns the tile object of a given ID (Internal use only)
 mazeTile* Maze::findTile(string id) {
 	for (mazeTile &t : maze) {
 		if (t.id == id) {
@@ -120,12 +123,12 @@ mazeTile* Maze::findTile(string id) {
 	throw invalid_argument("Value not found");
 }
 
-//returns probability of a tile.
+//Returns probability of a given tile ID.
 double Maze::getProb(string id){
 	return findTile(id)->prob;
 }
 
-//changes probability value at a tile in the maze given Id and new probability. 
+//Changes probability value at a tile in the maze given Id and new probability. 
 void Maze::updateProb(string id, double nProb) {
 	mazeTile* t = findTile(id);
 	if (!t->blocked) {
@@ -133,6 +136,7 @@ void Maze::updateProb(string id, double nProb) {
 	}
 }
 
+//Prints the current maze structure and tile probabilities to console.
 void Maze::print() {
 	int cnt = 0;
 	for (mazeTile t : maze) {

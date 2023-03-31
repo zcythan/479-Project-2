@@ -4,6 +4,7 @@ Calculator::Calculator() {
 	maze = Maze();
 }
 
+//Returns character opposing given direction.
 char Calculator::getOpp(char dir) {
 	if (dir == 'n') {
 		return 's';
@@ -19,6 +20,7 @@ char Calculator::getOpp(char dir) {
 	}
 }
 
+//Returns character to the left of given direction.
 char Calculator::getLeft(char dir) {
 	if (dir == 'n') {
 		return 'w';
@@ -34,6 +36,7 @@ char Calculator::getLeft(char dir) {
 	}
 }
 
+//Returns character to the right of given direction.
 char Calculator::getRight(char dir) {
 	if (dir == 'n') {
 		return 'e';
@@ -118,8 +121,6 @@ void Calculator::filter(vector<int> data) {
 				}
 			}
 		}
-		//if (tProb == 1)
-			//tProb = 0;
 		newProbs.push_back(maze.getProb(id) * tProb);
 	}
 	//here we normalize
@@ -138,7 +139,6 @@ void Calculator::prediction(char dir) {
 
 	for (string id : openIds){
 		double nProb = 0;
-		
 		//add the straight calcultions.
 		if (maze.getNeighbor(id, dir) == id) {
 			nProb += (maze.getProb(id) * straight);
@@ -153,7 +153,6 @@ void Calculator::prediction(char dir) {
 		if (maze.getNeighbor(id, getRight(dir)) != id) {
 			nProb += (maze.getProb(maze.getNeighbor(id, getRight(dir))) * dLeft);
 		}
-		
 		//drift right
 		if (maze.getNeighbor(id, getRight(dir)) == id) {
 			nProb += (maze.getProb(id) * dRight);
@@ -172,6 +171,7 @@ void Calculator::prediction(char dir) {
 	}
 }
 
+//Calls maze's print function.
 void Calculator::printMaze() {
 	maze.print();
 }
