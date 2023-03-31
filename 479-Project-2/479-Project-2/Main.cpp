@@ -21,7 +21,6 @@ int main() {
 	c.prediction('n');
 	c.printMaze();
 
-	/*
 	std::cout << "Filtering after Evidence [0, 0, 1, 0]" << std::endl;
 	c.filter({0, 0, 1, 0});
 	c.printMaze();
@@ -50,7 +49,7 @@ int main() {
 	c.filter({ 0, 0, 0, 0 });
 	c.printMaze();
 
-	*/
+	
 
 	system("pause");
 	return 0;

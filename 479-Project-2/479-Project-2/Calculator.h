@@ -15,6 +15,9 @@ private:
 	const double dRight = 0.10;
 	Maze maze;
 	vector<double> normalize(vector<double> probs);
+	char getOpp(char dir);
+	char getLeft(char dir);
+	char getRight(char dir);
 
 public:
 	Calculator();
@@ -22,6 +25,4 @@ public:
 	void printMaze();
 	void prediction(char dir);
 	double getSum();
-	
-	//functions that will be used to calculate distributions will live here and will reference the maze variable for current maze state.
 };

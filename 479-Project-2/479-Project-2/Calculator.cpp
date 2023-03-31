@@ -4,6 +4,51 @@ Calculator::Calculator() {
 	maze = Maze();
 }
 
+char Calculator::getOpp(char dir) {
+	if (dir == 'n') {
+		return 's';
+	}
+	if (dir == 's') {
+		return 'n';
+	}
+	if (dir == 'e') {
+		return 'w';
+	}
+	if (dir == 'w') {
+		return 'e';
+	}
+}
+
+char Calculator::getLeft(char dir) {
+	if (dir == 'n') {
+		return 'w';
+	}
+	if (dir == 's') {
+		return 'e';
+	}
+	if (dir == 'e') {
+		return 'n';
+	}
+	if (dir == 'w') {
+		return 's';
+	}
+}
+
+char Calculator::getRight(char dir) {
+	if (dir == 'n') {
+		return 'e';
+	}
+	if (dir == 's') {
+		return 'w';
+	}
+	if (dir == 'e') {
+		return 's';
+	}
+	if (dir == 'w') {
+		return 'n';
+	}
+}
+
 // Turns all probabilities of a given type into 
 vector<double> Calculator::normalize(vector<double> probs) {
 	double sum = 0;
@@ -11,9 +56,19 @@ vector<double> Calculator::normalize(vector<double> probs) {
 		sum = sum + prob;
 	}
 	for (int i = 0; i < probs.size(); i++) {
-		probs[i] = (probs[i] / sum)*100;
+		probs[i] = (probs[i] / sum) * 100;
 	}
 	return probs;
+}
+
+// Returns a sum of all of the probabilities
+double Calculator::getSum() {
+	vector<string> openIds = maze.getOpenIds();
+	double sum = 0;
+	for (string id : openIds) {
+		sum += maze.getProb(id);
+	}
+	return sum;
 }
 
 //It will produce a corresponding vector of new probabilities given sensing data.
@@ -29,9 +84,9 @@ void Calculator::filter(vector<int> data) {
 		for (int i = 0; i < sizeof(dirKey) / sizeof(char); i++) {
 			if (maze.checkObs(id, dirKey[i]) == static_cast<bool>(data[i]) && data[i] == 0) {
 				if (tProb == 0) {
-					tProb = seeNoObsCor;
+					tProb = seeNoObsCor; //just = seeNoObsCOr thats it
 				}
-				else {
+				else { //just tProb * seesNoObsCor thats it 
 					tProb = tProb * seeNoObsCor;
 				}
 			}
@@ -63,9 +118,9 @@ void Calculator::filter(vector<int> data) {
 				}
 			}
 		}
-		if (tProb == 1)
-			tProb = 0;
-		newProbs.push_back(tProb);
+		//if (tProb == 1)
+			//tProb = 0;
+		newProbs.push_back(maze.getProb(id) * tProb);
 	}
 	//here we normalize
 	newProbs = normalize(newProbs);
@@ -75,163 +130,46 @@ void Calculator::filter(vector<int> data) {
 	}
 }
 
-// Returns a sum of all of the probabilities
-double Calculator::getSum() {
-	vector<string> openIds = maze.getOpenIds();
-	double sum = 0;
-	for (string id : openIds) {
-		sum += maze.getProb(id);
-	}
-	return sum;
-}
-
+//It will produce a corresponding vector of new probabilities given movement data.
 void Calculator::prediction(char dir) {
-	// dir: 1 = W, 2 = N, 3 = E, 4 = S
+	char dirKey[4] = { 'w', 'n', 'e', 's' };
 	vector<string> openIds = maze.getOpenIds();
-	// Attmept 4A
-	double prevProb[20]{};
-	double prevProbSum = 0;
-	int i = 0;
-	for (string id : openIds) {
-		prevProb[i] = maze.getProb(id);
-		prevProbSum += prevProb[i];
-		i++;
-	}
+	vector<double> newProbs;
 
-	// Resetting probability container
-	for (string id : openIds) {
-		maze.updateProb(id, 0);
-	}
-	// 1 = W, 2 = N, 3 = E, 4 = S
-	double oldProb = 0;
-
-	// All std::couts are for debugging 
-
-	char left = '\0', right = '\0', straight = '\0';
-	switch (dir) {
-		// We are going west
-	case 'w':
-		left = 's', right = 'n', straight = 'w';
-		break;
-		// Going north
-	case 'n':
-		left = 'w', right = 'e', straight = 'n';
-		break;
-		// going east
-	case 'e':
-		left = 'n', right = 's', straight = 'e';
-		break;
-		// going south
-	case 's':
-		left = 'e', right = 'w', straight = 's';
-		break;
-	}
-
-	// Chances that our robot will go each direction, L S R
-	double pNoBounce[3] = {0.15, 0.75, 0.1};
-	string neighbor = "\0";
-	for (string id : openIds) {
-		// Probability of successful move
-		double mProb = 0;
-
-		// Attmept 4B
-		neighbor = maze.getNeighbor(id, left);
-		maze.updateProb(neighbor, (maze.getProb(id) + 0.15));
-		neighbor = maze.getNeighbor(id, right);
-		maze.updateProb(neighbor, (maze.getProb(id) + 0.1));
-		neighbor = maze.getNeighbor(id, straight);
-		maze.updateProb(neighbor, (maze.getProb(id) + 0.75));
-
-		// Attempt 3
-		/*std::cout << "I am " << id << ".\nMy left: ";
-		neighbor = maze.getNeighbor(id, left);
-		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
-		maze.updateProb(neighbor, (maze.getProb(id) + 0.15));
-		std::cout << maze.getProb(neighbor) << std::endl;
+	for (string id : openIds){
+		double nProb = 0;
 		
-		std::cout << "My right: ";
-		neighbor = maze.getNeighbor(id, right);
-		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
-		maze.updateProb(neighbor, (maze.getProb(id) + 0.1));
-		std::cout << maze.getProb(neighbor) << std::endl;
-
-		std::cout << "My front: ";
-		neighbor = maze.getNeighbor(id, straight);
-		std::cout << neighbor << " had prob: " << maze.getProb(neighbor) << ", now : ";
-		maze.updateProb(neighbor, (maze.getProb(id) + 0.75));
-		std::cout << maze.getProb(neighbor) << std::endl;
-		*/
-
-		// Attempt 1 
-		//for (int i = 1; i < 4; i++) {
-			/*for (int j = 1; j < 4; j++) {
-				edges[j] = maze.isEdge(id, j);
-			}
-			*/
-			//If it senses no obstical and is correct.
-
-			/*
-			std::cout << "My ID is: " << id << ", Turning " << dir << "." << std::endl;
-			std::cout << "My left: ";
-			if (maze.checkObs(id, left)) {
-				std::cout << "Self; Right: ";
-				//neighbor = maze.getNeighbor(id, dir);
-				maze.updateProb(id, maze.getProb(id) * 0.15);
-			}
-			else {
-				// neighbor's probability goes up by prob*0.15
-				neighbor = maze.getNeighbor(id, dir);
-				std::cout << neighbor << "; Right:";
-				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.15);
-			}
-			if (maze.checkObs(id, right)) {
-				std::cout << "Self; Front: ";
-				//neighbor = maze.getNeighbor(id, dir);
-				maze.updateProb(id, maze.getProb(id) * 0.1);
-			}
-			else {
-
-				// neighbor's probability goes up
-				neighbor = maze.getNeighbor(id, dir);
-				std::cout << neighbor << "; front:";
-				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.1);
-			}
-			if (maze.checkObs(id, straight)) {
-				std::cout << " self\n";
-				//neighbor = maze.getNeighbor(id, dir);
-				maze.updateProb(id, maze.getProb(id) * 0.75);
-			}
-			else {
-				// neighbor's probability goes up 
-				neighbor = maze.getNeighbor(id, dir);
-				std::cout << neighbor << ".\n";
-				maze.updateProb(neighbor, maze.getProb(neighbor) * 0.75);
-			}
-			*/
-		//}
+		//add the straight calcultions.
+		if (maze.getNeighbor(id, dir) == id) {
+			nProb += (maze.getProb(id) * straight);
+		}
+		if (maze.getNeighbor(id, getOpp(dir)) != id){
+			nProb += (maze.getProb(maze.getNeighbor(id, getOpp(dir))) * straight);
+		}
+		//drift left
+		if (maze.getNeighbor(id, getLeft(dir)) == id) {
+			nProb += (maze.getProb(id) * dLeft);
+		}
+		if (maze.getNeighbor(id, getRight(dir)) != id) {
+			nProb += (maze.getProb(maze.getNeighbor(id, getRight(dir))) * dLeft);
+		}
+		
+		//drift right
+		if (maze.getNeighbor(id, getRight(dir)) == id) {
+			nProb += (maze.getProb(id) * dRight);
+		}
+		if (maze.getNeighbor(id, getLeft(dir)) != id) {
+			nProb += (maze.getProb(maze.getNeighbor(id, getLeft(dir))) * dRight);
+		}
+		
+		newProbs.push_back(nProb);
 	}
-
-	// Attempt 4C
-	double sum = getSum();
-	i = 0;
-	for (string id: openIds) {
-		// maze.updateProb(id, (prevProb[i] * (maze.getProb(id))));
-		maze.updateProb(id, (prevProbSum * (maze.getProb(id))));
-	}
-
-	for (string id : openIds) {
-		maze.updateProb(id, (maze.getProb(id) / sum));
-	}
-
-	/*
-	for (string id : openIds) {
-		newProbs.push_back(maze.getProb(id));
-	}
-
-		newProbs = normalize(newProbs);
+	//here we normalize
+	newProbs = normalize(newProbs);
+	//update maze
 	for (int i = 0; i < openIds.size(); i++) {
 		maze.updateProb(openIds[i], newProbs[i]);
-	}*/
+	}
 }
 
 void Calculator::printMaze() {
