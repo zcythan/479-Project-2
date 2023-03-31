@@ -52,7 +52,7 @@ char Calculator::getRight(char dir) {
 	}
 }
 
-// Turns all probabilities of a given type into 
+// Turns all probabilities of a given type into a normalized distribution.
 vector<double> Calculator::normalize(vector<double> probs) {
 	double sum = 0;
 	for (double prob : probs) {
