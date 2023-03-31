@@ -18,7 +18,7 @@ int main() {
 	c.printMaze();
 
 	std::cout << "Prediction after Action N\n" << std::endl;
-	c.prediction('n');
+	c.predict('n');
 	c.printMaze();
 
 	std::cout << "Filtering after Evidence [0, 0, 1, 0]" << std::endl;
@@ -26,7 +26,7 @@ int main() {
 	c.printMaze();
 	
 	std::cout << "Prediction after Action N" << std::endl;
-	c.prediction('n');
+	c.predict('n');
 	c.printMaze();
 
 	std::cout << "Filtering after Evidence [0, 1, 1, 0]" << std::endl;
@@ -34,7 +34,7 @@ int main() {
 	c.printMaze();
 
 	std::cout << "Prediction after Action W\n";
-	c.prediction('w');
+	c.predict('w');
 	c.printMaze();
 
 	std::cout << "Filtering after Evidence [0, 1, 0, 0]\n";
@@ -42,7 +42,7 @@ int main() {
 	c.printMaze();
 
 	std::cout << "Prediction after Action S\n";
-	c.prediction('s');
+	c.predict('s');
 	c.printMaze();
 
 	std::cout << "Filtering after Evidence [0, 0, 0, 0]\n";

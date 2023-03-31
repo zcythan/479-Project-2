@@ -23,6 +23,6 @@ public:
 	Calculator();
 	void filter(vector<int> data);
 	void printMaze();
-	void prediction(char dir);
+	void predict(char dir);
 	double getSum();
 };

@@ -132,7 +132,7 @@ void Calculator::filter(vector<int> data) {
 }
 
 //It will produce a corresponding vector of new probabilities given movement data.
-void Calculator::prediction(char dir) {
+void Calculator::predict(char dir) {
 	char dirKey[4] = { 'w', 'n', 'e', 's' };
 	vector<string> openIds = maze.getOpenIds();
 	vector<double> newProbs;
