@@ -1,53 +1,53 @@
 #include "Maze.h"
-#include "Calculator.h"
+#include "Agent.h"
 #include<iostream>
 #include<vector>
 
 using namespace std;
 
 int main() {
-	Calculator c = Calculator();
+	Agent a = Agent();
 
 	cout << "Initial Location Probabilities" << endl;
 	cout << endl;
-	c.printMaze();
+	a.printMaze();
 
 	cout << "Filtering after Evidence [0, 0, 0, 0]" << endl;
 	cout << endl;
-	c.filter({ 0, 0 ,0, 0 });
-	c.printMaze();
+	a.filter({ 0, 0 ,0, 0 });
+	a.printMaze();
 
 	std::cout << "Prediction after Action N\n" << std::endl;
-	c.predict('n');
-	c.printMaze();
+	a.predict('n');
+	a.printMaze();
 
 	std::cout << "Filtering after Evidence [0, 0, 1, 0]" << std::endl;
-	c.filter({0, 0, 1, 0});
-	c.printMaze();
+	a.filter({0, 0, 1, 0});
+	a.printMaze();
 	
 	std::cout << "Prediction after Action N" << std::endl;
-	c.predict('n');
-	c.printMaze();
+	a.predict('n');
+	a.printMaze();
 
 	std::cout << "Filtering after Evidence [0, 1, 1, 0]" << std::endl;
-	c.filter({ 0, 1, 1, 0 });
-	c.printMaze();
+	a.filter({ 0, 1, 1, 0 });
+	a.printMaze();
 
 	std::cout << "Prediction after Action W\n";
-	c.predict('w');
-	c.printMaze();
+	a.predict('w');
+	a.printMaze();
 
 	std::cout << "Filtering after Evidence [0, 1, 0, 0]\n";
-	c.filter({ 0, 1, 0, 0 });
-	c.printMaze();
+	a.filter({ 0, 1, 0, 0 });
+	a.printMaze();
 
 	std::cout << "Prediction after Action S\n";
-	c.predict('s');
-	c.printMaze();
+	a.predict('s');
+	a.printMaze();
 
 	std::cout << "Filtering after Evidence [0, 0, 0, 0]\n";
-	c.filter({ 0, 0, 0, 0 });
-	c.printMaze();
+	a.filter({ 0, 0, 0, 0 });
+	a.printMaze();
 
 	
 

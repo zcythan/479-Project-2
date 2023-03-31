@@ -1,11 +1,11 @@
-#include "Calculator.h"
+#include "Agent.h"
 
-Calculator::Calculator() {
+Agent::Agent() {
 	maze = Maze();
 }
 
 //Returns character opposing given direction.
-char Calculator::getOpp(char dir) {
+char Agent::getOpp(char dir) {
 	if (dir == 'n') {
 		return 's';
 	}
@@ -21,7 +21,7 @@ char Calculator::getOpp(char dir) {
 }
 
 //Returns character to the left of given direction.
-char Calculator::getLeft(char dir) {
+char Agent::getLeft(char dir) {
 	if (dir == 'n') {
 		return 'w';
 	}
@@ -37,7 +37,7 @@ char Calculator::getLeft(char dir) {
 }
 
 //Returns character to the right of given direction.
-char Calculator::getRight(char dir) {
+char Agent::getRight(char dir) {
 	if (dir == 'n') {
 		return 'e';
 	}
@@ -53,7 +53,7 @@ char Calculator::getRight(char dir) {
 }
 
 // Turns all probabilities of a given type into a normalized distribution.
-vector<double> Calculator::normalize(vector<double> probs) {
+vector<double> Agent::normalize(vector<double> probs) {
 	double sum = 0;
 	for (double prob : probs) {
 		sum = sum + prob;
@@ -65,7 +65,7 @@ vector<double> Calculator::normalize(vector<double> probs) {
 }
 
 // Returns a sum of all of the probabilities
-double Calculator::getSum() {
+double Agent::getSum() {
 	vector<string> openIds = maze.getOpenIds();
 	double sum = 0;
 	for (string id : openIds) {
@@ -75,7 +75,7 @@ double Calculator::getSum() {
 }
 
 //It will produce a corresponding vector of new probabilities given sensing data.
-void Calculator::filter(vector<int> data) {
+void Agent::filter(vector<int> data) {
 	char dirKey[4] = { 'w', 'n', 'e', 's' };
 	//gets vector of all tile Ids that are unblocked.
 	vector<string> openIds = maze.getOpenIds();
@@ -132,7 +132,7 @@ void Calculator::filter(vector<int> data) {
 }
 
 //It will produce a corresponding vector of new probabilities given movement data.
-void Calculator::predict(char dir) {
+void Agent::predict(char dir) {
 	char dirKey[4] = { 'w', 'n', 'e', 's' };
 	vector<string> openIds = maze.getOpenIds();
 	vector<double> newProbs;
@@ -172,6 +172,6 @@ void Calculator::predict(char dir) {
 }
 
 //Calls maze's print function.
-void Calculator::printMaze() {
+void Agent::printMaze() {
 	maze.print();
 }

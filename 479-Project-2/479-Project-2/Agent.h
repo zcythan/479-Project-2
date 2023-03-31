@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class Calculator {
+class Agent {
 private:
 	//constants for probabilities.
 	const double seeObsCor = 0.9;
@@ -20,7 +20,7 @@ private:
 	char getRight(char dir);
 
 public:
-	Calculator();
+	Agent();
 	void filter(vector<int> data);
 	void printMaze();
 	void predict(char dir);
