@@ -87,9 +87,9 @@ void Calculator::filter(vector<int> data) {
 		for (int i = 0; i < sizeof(dirKey) / sizeof(char); i++) {
 			if (maze.checkObs(id, dirKey[i]) == static_cast<bool>(data[i]) && data[i] == 0) {
 				if (tProb == 0) {
-					tProb = seeNoObsCor; //just = seeNoObsCOr thats it
+					tProb = seeNoObsCor; 
 				}
-				else { //just tProb * seesNoObsCor thats it 
+				else { 
 					tProb = tProb * seeNoObsCor;
 				}
 			}
