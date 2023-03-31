@@ -81,6 +81,7 @@ void Agent::filter(vector<int> data) {
 	vector<string> openIds = maze.getOpenIds();
 	vector<double> newProbs;
 
+	//Calculate evidence conditional probability
 	for (string id : openIds) {
 		//calculate the new probability here based on sensor data.
 		double tProb = 0;
@@ -133,10 +134,9 @@ void Agent::filter(vector<int> data) {
 
 //It will produce a corresponding vector of new probabilities given movement data.
 void Agent::predict(char dir) {
-	char dirKey[4] = { 'w', 'n', 'e', 's' };
 	vector<string> openIds = maze.getOpenIds();
 	vector<double> newProbs;
-
+	//Calculate Transitional Probability
 	for (string id : openIds){
 		double nProb = 0;
 		//add the straight calcultions.
